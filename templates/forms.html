@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}Add |{{ block.super }}{% endblock %}
+
+{% block content %}
+
+<div class="container justify-content-center mb-4" style="width:50%">
+    {% include "snippets/form.html" with form=form %}
+</div>
+{% endblock %}

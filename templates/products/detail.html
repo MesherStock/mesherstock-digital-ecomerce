@@ -1,0 +1,95 @@
+<!--  -->
+
+
+{% extends 'base.html' %}
+
+{% load watermark %}
+
+
+{% block title %} {{ object.title }} |{{ block.super }} {% endblock %}
+
+{% block content %}
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="bo-links">
+                    <a href="/"><i class="fa fa-home"></i> Home</a>
+                    <span>{{ object.title }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+
+<section class="mb-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                {% include "products/snippets/product_detail.html" with product=object %}
+                <div class="mt-4">
+                    <h4 class="fs-1 fw-bold">Image Details</h4>
+
+                    Contributor: &nbsp;&nbsp;&nbsp;<a
+                        href="{{ object.seller.get_absolute_url }}">{{object.seller.user.username}}</a><br>
+                    Image Size: &nbsp;&nbsp;&nbsp; {{ object.image_size }} <br>
+                    Location: &nbsp;&nbsp;&nbsp; {{ object.location }} <br>
+                    </h4>
+                </div>
+
+
+            </div>
+            <div class="col-lg-6">
+
+                <h5>{{ object.title }}</h5>
+                <small>Image: #2878687{{ product.id }}</small>
+                <hr>
+                <p>$ {{ object.price }}</p>
+                <hr>
+
+                {% include "products/snippets/product_content.html" with product=object %}
+                <div class="" style="text-align: center;">
+                    <a class="btn btn-primary rounded-pill" href="/checkout/"
+                        style="text-decoration: none; width: 100%;">
+                        Buy now </a>
+                </div>
+
+            </div>
+        </div>
+        <hr>
+        {% if related %}
+        <h5 class="small-text">Related Images: &nbsp;&nbsp;</h5>
+        <hr>
+        <div class="row" style="display: flex;">
+
+            {% for item in related %}
+            <div class="col-md-3 p-0" style="flex:33.33%; text-align: center;">
+
+
+                <a href="{{ item.get_absolute_url }}">
+                    <img class="img-responsive" src="{{item.image.url|watermark:'MeShutter,position=C,opacity=85'}}" alt=""
+                        style="max-width: 480;max-height:auto;">
+                </a>
+
+
+
+            </div>
+            {% endfor %}
+
+        </div>
+        {% endif %}
+    </div>
+
+
+</section>
+
+
+
+
+
+
+{% endblock %}

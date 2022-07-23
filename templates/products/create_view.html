@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Create Product |{{ block.super }}{% endblock %}
+{% block content %}
+<div class="breadcrumb-option spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 ">
+                <div class="bo-links">
+                    
+                    <a href="/">
+                        <img src="{% static 'img/logo.png' %}" alt="">
+                    </a>
+                
+                    
+                    <span style="float: right;">Image Creation</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mb-4">
+    <div class="row">
+        <div class="col-md-7">
+            <img src="{% static 'img/hero/hero-2.jpg' %}" alt="" width="100%">
+        </div>
+        <div class="col-md-5">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn btn-primary" type="submit">Create Product</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+
+    <button class="btn btn-primary rounded-pill" type="submit" style="width: 100%;">
+        {% if submit_btn %}
+        {{ submit_btn}}
+        {% else %}
+        submit
+        {% endif %}
+    </button>
+</form>

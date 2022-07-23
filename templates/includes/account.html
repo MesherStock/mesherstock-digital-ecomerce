@@ -1,0 +1,26 @@
+                        <li><a href="#"><i class="fa fa-user-circle" aria-hidden="true" style="font-size: 35px;"></i>&nbsp;{{ request.user.first_name }} </a>
+                            <ul class="dropdown">
+                                {% if request.user.seller_set.all %}
+                                <div href="" class="dropdown-header text-white">Merchant Account</div>
+                                <li><a class="dropdown-item" href="{% url 'seller:seller_products' %}">Manage
+                                        Products</a></li>
+                                <li><a class="dropdown-item" href="{% url 'seller:transactions' %}">Sales report</a>
+                                </li>
+                                <li><a class="dropdown-item" href="{% url 'seller:dashboard' %}">Seller Dashboard</a>
+                                </li>
+
+                                {% endif %}
+                                {% if request.user.is_authenticated %}
+                                
+                               
+                                <li><a href="{% url 'order:orders' %}">My Library</a></li>
+                               
+                                <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
+                                {% else %}
+                                <li><a href="{% url 'accounts:login' %}">Login</a></li>
+                                <li><a href="{% url 'accounts:register' %}">Buy/Sell</a></li>
+                                {% endif %}
+
+
+                            </ul>
+                        </li>

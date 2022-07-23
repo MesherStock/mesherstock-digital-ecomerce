@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Products |{{ block.super }}{% endblock %}
+{% block content %}
+
+<div class="row">
+   
+        {% include "products/snippets/product_list_snippet.html" with product_list=object_list %}
+
+</div>
+
+
+{% endblock %}

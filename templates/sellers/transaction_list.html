@@ -1,0 +1,33 @@
+<table class="table table-hover">
+    <thead>
+        <th>Image</th>
+        <th>Product</th>
+        <th>User</th>
+        <td>Sale Total</td>
+    </thead>
+    {% for trans in transaction_list %}
+    <tbody>
+        <tr>
+            <td>
+                <img src="{{ trans.product.image.url }}" alt="" width="100px">
+
+            </td>
+            <td>
+
+
+                {{ trans.product }}
+
+            </td>
+            <td>
+                {{ trans.user }}
+            </td>
+            <td>
+                $ {{ trans.product.price }}
+            </td>
+            <td>
+                {{ trans.timestamp|timesince }} ago
+            </td>
+        </tr>
+    </tbody>
+    {% endfor %}
+</table>

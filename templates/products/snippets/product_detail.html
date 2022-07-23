@@ -1,0 +1,32 @@
+
+{% load watermark %}
+<div class="">
+    
+    {% if product.image %}
+        <img src="{{ product.image.url|watermark:'MeShutter,position=C,opacity=85' }}" alt="" style="width: 1000px;" width="">
+    {% endif %}
+    
+    {% if product.video_link %}
+    
+    <iframe width="420" height="345" src="{{ product.video_link }}">
+    </iframe>
+    {% endif %}
+    
+    
+    {% if show_content %}
+    {% include "products/snippets/product_content.html" with product=object %}
+    {% endif %}
+    
+    
+    {% if show_price %}
+    <p>
+        ${{product.price}}
+    </p>
+    {% endif %}
+    
+    {% if show_inventory %}
+    <p>
+        {{ product.inventory }}
+    </p>
+    {% endif %}
+    </div>

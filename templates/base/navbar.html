@@ -1,0 +1,28 @@
+{% load static %}
+
+<header class="header-section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="logo">
+                    <a href="/">
+                        <img src="{% static 'img/logo.png' %}" alt="">
+                    </a>
+                </div>
+                <nav class="nav-menu mobile-menu">
+                    <ul>
+
+                        <li>
+                            {% include 'includes/account.html' %}
+                        </li>
+                    </ul>
+                </nav>
+                <div class="top-search search-switch">
+                    <i class="fa fa-search"></i>
+                </div>
+                <div id="mobile-menu-wrap"></div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Header End -->

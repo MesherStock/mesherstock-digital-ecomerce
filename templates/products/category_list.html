@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Categories |{{ block.super }}{% endblock %}
+{% block content %}
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="bo-links">
+                    <a href="/"><i class="fa fa-home"></i> Home</a>
+                    <span>All Categories</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+
+<div class="categories-slider owl-carousel">
+    {% for item in category %}
+
+
+    <div class="cs-item">
+        <a href="{{item.get_url}}">
+            <div class="cs-pic set-bg" data-setbg="{{item.image.url}}"></div>
+
+
+            <div class="cs-text">
+                <h4>{{ item.category }}</h4>
+                <!-- <span>{{ item.products.product.image}}</span> -->
+            </div>
+        </a>
+
+
+
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+
+{% endblock %}

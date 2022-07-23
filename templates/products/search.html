@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ q }} |{{ block.super }}{% endblock %}
+{% block content %}
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="bo-links">
+                    <a href="/"><i class="fa fa-home"></i> Home</a>
+                    <span>{% if results %}Result for :{{ q }}{% else %}No Result for: {{q}}{% endif %}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<section class="m-4">
+    <div class="container">
+
+        <div class="row" style="margin:0;padding:0;">
+            {% for item in results %}
+            {% if item %}
+            <div class="col-md-2 p-0">
+
+                <a href="{{ item.get_absolute_url }}"> <img src="{{ item.image.url }}" alt=""
+                        style="max-width: 480;max-height: auto;"></a>
+
+
+                <!-- {% include "products/detail_snippet.html" with products=obj %} -->
+            </div>
+
+            {% endif%}
+            {% endfor %}
+        </div>
+
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+search result
