@@ -1,3 +1,4 @@
+import os
 from importlib.resources import path
 from pathlib import Path
 
@@ -8,7 +9,7 @@ SECRET_KEY = 'django-insecure-d3d2*@8c7yy(_2ml%l9hr$kctf6apk04!in-vrq3*0)q1jza0u
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', 'amestock.pythonanywhere.com']
 
 
 # Application definition
@@ -70,7 +71,7 @@ AUTH_USER_MODEL = 'accounts.Account'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': str(BASE_DIR / 'db.sqlite3'),
     }
 }
 
@@ -115,20 +116,20 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    Path.joinpath(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static'),
 )
 
-STATIC_ROOT = Path.joinpath(BASE_DIR, "/static")
+STATIC_ROOT = os.path.join(BASE_DIR, "/static")
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR/ "mediaProt"/ "media"
 
 PROTECTED_MEDIA = BASE_DIR/ "mediaProt"/ "protected"
 
-if DEBUG:
-    STATIC_ROOT.mkdir(parents=True, exist_ok=True)
-    MEDIA_ROOT.mkdir(parents=True, exist_ok=True)
-    PROTECTED_MEDIA.mkdir(parents=True, exist_ok=True)
+# if DEBUG:
+#     STATIC_ROOT.mkdir(parents=True, exist_ok=True)
+#     MEDIA_ROOT.mkdir(parents=True, exist_ok=True)
+#     PROTECTED_MEDIA.mkdir(parents=True, exist_ok=True)
     
 
 
