@@ -5,7 +5,6 @@ from django.core.mail import EmailMessage
 import json
 from django.urls import reverse
 import pathlib
-from tkinter.messagebox import RETRY
 from urllib import response
 from wsgiref.util import FileWrapper
 from mimetypes import guess_type
