@@ -15,12 +15,13 @@ ALLOWED_HOSTS = ['amestock-ecomerce.herokuapp.com', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    "whitenoise.runserver_nostatic",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    # 'django.contrib.staticfiles',
     'paypal.standard.ipn',
     'analytics',
     'emails',
