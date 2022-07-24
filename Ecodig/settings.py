@@ -7,9 +7,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-d3d2*@8c7yy(_2ml%l9hr$kctf6apk04!in-vrq3*0)q1jza0u'
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', 'amestock.pythonanywhere.com']
+ALLOWED_HOSTS = ['amestock-ecomerce.herokuapp.com', '127.0.0.1']
 
 
 # Application definition

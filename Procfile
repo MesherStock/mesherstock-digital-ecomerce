@@ -1,0 +1,1 @@
+web: gunicorn Ecodig.wsgi --log-file -
