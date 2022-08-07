@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-d3d2*@8c7yy(_2ml%l9hr$kctf6apk04!in-vrq3*0)q1jza0u'
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['amestock-ecomerce.herokuapp.com', '127.0.0.1', 'localhost']
 # ALLOWED_HOST = []
@@ -127,13 +127,13 @@ USE_TZ = True
 
 
 
-# STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-STATIC_ROOT = Path.joinpath(BASE_DIR, '/static/')
+# STATIC_ROOT = Path.joinpath(BASE_DIR, '/static/')
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR/ "mediaProt"/ "media"
 
