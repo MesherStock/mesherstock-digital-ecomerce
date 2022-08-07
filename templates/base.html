@@ -1,30 +1,30 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>E Store - eCommerce HTML Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="eCommerce HTML Template Free Download" name="keywords">
+    <meta content="eCommerce HTML Template Free Download" name="description">
 
-    <title>{% block title %}Meshutter{% endblock %}</title>
-    {% include "base/favicon.html" %}
+    <!-- Favicon -->
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
 
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap"
+        rel="stylesheet">
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css?family=Quantico:400,700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
+    <!-- CSS Libraries -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="{% static 'lib/slick/slick.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/slick/slick-theme.css' %}" rel="stylesheet">
 
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/elegant-icons.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
-
-
+    <!-- Template Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    
     <style type="text/less">
         {% block styles %}{% endblock %}
     </style>
@@ -34,52 +34,51 @@
 
     <!-- scripts -->
     {% block css %}{% endblock %}
-
-
 </head>
 
 <body>
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
-
-    <div class="container-fluid">
-       
-        {% block content %}
-
-
-
-        {% endblock %}
-
-
-        <!-- Search model Begin -->
-        <div class="search-model">
-            <div class="h-100 d-flex align-items-center justify-content-center">
-                <div class="search-close-switch">+</div>
-                <form class="search-model-form" action="{% url 'product:search' %}">
-                    <input type="text" id="search-input" name="q" placeholder="Search here.....">
-                </form>
+    <!-- Top bar Start -->
+    <div class="top-bar">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <i class="fa fa-envelope"></i>
+                    support@email.com
+                </div>
+                <div class="col-sm-6">
+                    <i class="fa fa-phone-alt"></i>
+                    +012-345-6789
+                </div>
             </div>
         </div>
-        <!-- Search model end -->
     </div>
-    {% include "base/footer.html" %}
+    <!-- Top bar End -->
 
-    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
-    <script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
-    <script src="{% static 'js/masonry.pkgd.min.js' %}"></script>
-    <script src="{% static 'js/jquery.slicknav.js' %}"></script>
-    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <!-- Nav Bar Start -->
+    {% include 'includes/navbar.html' %}
+    <!-- Nav Bar End -->
+
+    <!-- Bottom Bar Start -->
+    {% include 'includes/bottom.html' %}
+    <!-- Bottom Bar End -->
+
+    {% block content %}
+
+    {% endblock %}
+
+    {% include 'includes/footer.html' %}
+
+    <!-- Back to Top -->
+    <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/slick/slick.min.js' %}"></script>
+
+    <!-- Template Javascript -->
     <script src="{% static 'js/main.js' %}"></script>
-    
-
-
-
-
-
-    {% block js %}{% endblock %}
 </body>
 
 </html>

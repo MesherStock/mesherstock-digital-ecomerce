@@ -3,84 +3,101 @@
 {% load static %}
 {% block title %}{{title}} |{{ block.super }}{% endblock %}
 {% block content %}
-<!-- Breadcrumb Begin -->
-<div class="breadcrumb-option spad">
-    <div class="container">
+
+{% if apply_form %}
+<div style="background-image: url('https://mdbootstrap.com/img/new/standard/city/041.jpg');height: 400px;">
+    <p class="text-white h1 text-center">The world longs to get your beautiful work.</p>
+    <p class="h4 text-white text-center">Become a contributor and earn up to 50% of any sale.</p>
+    <p class="text-white text-center">Get your images seen by image buyers from around the world</p>
+    <h4 class="text-center text-white">Seller Registration</h4>
+</div>
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-7">
+            <ol>
+                <li>A quick and easy submission process</li>
+                <li>Up to 50% commission split for Exclusive images</li>
+                <li>A quick and easy submission process</li>
+                <li>A straightforward and hassle free contract</li>
+            </ol>
+        </div>
+        <div class="col-md-5">
+            <form class="" action="" method="post">
+                {% csrf_token %}
+                {{ apply_form.as_p }}
+
+                <input class="btn btn-primary rounded-pill" type="submit" name="" value="Submit">
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endif %}
+
+<!-- Product List Start -->
+<div class="product-view">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12 ">
-                <div class="bo-links">
-                    
-                    <a href="/">
-                        <img src="{% static 'img/logo.png' %}" alt="">
-                    </a>
-                
-                    <!-- <a href="."><i class="fa fa-home"></i> Home</a> -->
-                    <span style="float: right;">{{ title }}</span>
+            {% if products %}
+            <div class="col-lg-6">
+                <div class="row">
+
+                    {% for product in products %}
+                    <div class="col-md-4">
+                        <div class="product-item">
+                            <div class="product-image">
+                                <a href="product-detail.html">
+                                    <img src="{{ product.image.url }}" alt="Product Image">
+                                </a>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    {% endfor %}
+
                 </div>
+
+                <!-- Pagination Start -->
+                <div class="col-md-12">
+                    <nav aria-label="Page navigation example">
+                      <div class="row">
+                          <div class="col-md-6">
+                            <p class="center-text">
+                            <a href="{% url 'seller:create' %}" class="btn btn-outline-warning">Add Products</a>
+                        </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p>
+                            <a href="{% url 'seller:seller_products' %}" class="btn btn-outline-info">View Products</a>
+                        </p>
+                        </div>
+                      </div>
+                    </nav>
+                </div>
+                <!-- Pagination Start -->
             </div>
+            {% endif %}
+
+            <!-- Side Bar Start -->
+            {% if transactions %}
+            <div class="col-lg-6 sidebar">
+                <div class="sidebar-widget category">
+                    <h2 class="title">My Transactions</h2>
+                    {% include 'sellers/transaction_list.html' with transaction_list=transactions %}
+
+                    <a class="text-center" href="{% url 'seller:transactions' %}">All Transactions</a>
+                </div>
+
+
+            </div>
+            {% endif %}
+            <!-- Side Bar End -->
         </div>
     </div>
 </div>
-<!-- Breadcrumb End -->
-    <div class="container">
-        {% if apply_form %}
-        <div class="row">
-            <div class="col-md-7">
-                Seller Terms and Conditions
-                <hr>
-            </div>
-            <div class="col-md-5">
-                <form class="" action="" method="post">
-                    <h4>Seller Registration</h4>
-                    {% csrf_token %}
-                    {{ apply_form.as_p }}
+<!-- Product List End -->
 
-                    <input class="btn btn-primary rounded-pill" type="submit" name="" value="Submit">
-                </form>
-
-
-            </div>
-        </div>
-
-
-        {% endif %}
-
-    </div>
-
-
-    <section class="mb-4">
-        <div class="container">
-            {% if products %}
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="d-flex">
-
-                        {% include "products/snippets/product_list_snippets.html" with product=products %}
-
-                    </div>
-                    <p class="center-text">
-                        <a href="{% url 'seller:create' %}" class="btn btn-outline-warning">Add Products</a>
-                    </p>
-                    <p>
-                        <a href="{% url 'seller:seller_products' %}" class="btn btn-outline-info">View Products</a>
-                    </p>
-                </div>
-
-
-                {% endif %}
-
-                <div class="col-lg-6">
-                    {% if transactions %}
-                    <h4>My Transactions</h4>
-                    {% include 'sellers/transaction_list.html' with transaction_list=transactions %}
-
-                    <a href="{% url 'seller:transactions' %}">All Transactions</a>
-                    {% endif %}
-                </div>
-
-            </div>
-
-        </div>
-    </section>
-
-    {% endblock %}
+{% endblock %}

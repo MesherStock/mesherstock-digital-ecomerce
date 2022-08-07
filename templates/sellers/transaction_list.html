@@ -3,7 +3,7 @@
         <th>Image</th>
         <th>Product</th>
         <th>User</th>
-        <td>Sale Total</td>
+        <td>Total</td>
     </thead>
     {% for trans in transaction_list %}
     <tbody>
@@ -19,10 +19,10 @@
 
             </td>
             <td>
-                {{ trans.user }}
+                {{ trans.user.username }}
             </td>
             <td>
-                $ {{ trans.product.price }}
+                ${{ trans.product.price }}
             </td>
             <td>
                 {{ trans.timestamp|timesince }} ago

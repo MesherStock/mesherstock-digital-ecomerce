@@ -7,15 +7,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-d3d2*@8c7yy(_2ml%l9hr$kctf6apk04!in-vrq3*0)q1jza0u'
 
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['amestock-ecomerce.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['amestock-ecomerce.herokuapp.com', '127.0.0.1', 'localhost']
+# ALLOWED_HOST = []
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    "whitenoise.runserver_nostatic",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'sellers',
     'tags',
     'watermarker',
+    # "anymail",
 ]
 
 MIDDLEWARE = [
@@ -111,7 +112,13 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+# ANYMAIL = {
+#     "MAILGUN_API_KEY": "949344ed012e8b4ea353523f09e57669-835621cf-c4fbca06",
+#     "SEND_DEFAULTS": {
+#         "tags": ["Meshutter"]
+#     },
+#     "IGNORE_RECIPIENT_STATUS": True,
+# }
 
 
 # Static files (CSS, JavaScript, Images)
@@ -120,13 +127,13 @@ USE_TZ = True
 
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+# STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-
+STATIC_ROOT = Path.joinpath(BASE_DIR, '/static/')
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR/ "mediaProt"/ "media"
 
@@ -162,10 +169,18 @@ MESSAGE_TAGS = {
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'amecomglobalenterp@gmail.com'
-EMAIL_HOST_PASSWORD= 'btwtzvwlfagtpqxd'
-EMAIL_USE_TSL= True
+
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'amecomglobalenterp@gmail.com'
+# EMAIL_HOST_PASSWORD= 'nsxqgbgysgpradet'
+# EMAIL_USE_TSL= True
+# EMAIL_USE_SSL= False
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = '470baf9f7e5d6b'
+EMAIL_HOST_PASSWORD = '306c6b7e130846'
+EMAIL_PORT = '2525'
+
 

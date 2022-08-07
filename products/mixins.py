@@ -4,14 +4,17 @@ from sellers.mixins import SellerAccountMixin
 
 
 class ProductManagerMixin(SellerAccountMixin,object):
-    def get_object(self, **kwargs):
+    def get_object(self, *args, **kwargs):
         seller = self.get_account()
-        obj = super(ProductManagerMixin, self).get_object(**kwargs)
+        obj = super(ProductManagerMixin, self).get_object(*args, **kwargs)
         try:
-            obj.user == seller
+            obj.seller == seller
+        
         except:
             raise Http404
+
         if obj.seller == seller:
             return obj
+        
         else:
             raise Http404

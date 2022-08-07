@@ -1,28 +1,16 @@
+{% for instance in object_list %}
 
-
-{% for instance in product_list %}
-
-<div class="col-md-2 p-0">
-    <a href="{{ instance.get_absolute_url }}" data-toggle="tooltip"
-        title='{{ instance.description|safe|escape |slice:":300" }}'>
-
-        <img src="{{ instance.image.url }}" alt="" style="max-width: 500;max-height:500px;">
-
-
-    </a>
-
-    <!-- Generated markup by the plugin -->
-    <div class="tooltip bs-tooltip-top" role="tooltip">
-        <div class="arrow"></div>
-        <div class="tooltip-inner">
-            <a href="">
-                <h3></h3>
-            </a>
-            <p></p>
-
+<div class="category">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="category-item ch-400">
+                    <img src="{{ instance.product.image.url }}" />
+                    <a class="category-name" href="{{ instance.get_absolute_url }}">
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
-
 {% endfor %}

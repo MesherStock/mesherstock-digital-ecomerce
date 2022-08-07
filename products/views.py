@@ -69,7 +69,7 @@ class VendorListView(ListView):
 
 def home_view(request):
     cat = Category.objects.all()
-    category = CategoryImage.objects.filter(category_id__in=cat)[:3]
+    category = CategoryImage.objects.filter(category_id__in=cat)[:4]
     context = {
         "category" : category,
         'cat':cat,
@@ -211,7 +211,7 @@ def product_detail_view(request,slug):
 
 class ProductUpdateView(ProductManagerMixin,MultiSlugMixin,UpdateView):
     model = Product
-    template_name = "products/update_view.html"
+    template_name = "forms.html"
     form_class = ProductForm
 
 

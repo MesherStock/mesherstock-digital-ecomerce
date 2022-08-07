@@ -1,141 +1,239 @@
-/*  ---------------------------------------------------
-    Template Name: Phozogy
-    Description:  Phozogy photography HTML Template
-    Author: Colorlib
-    Author URI: https://colorlib.com
-    Version: 1.0
-    Created: Colorlib
----------------------------------------------------------  */
-
-'use strict';
-
 (function ($) {
-
-    /*------------------
-        Preloader
-    --------------------*/
-    $(window).on('load', function () {
-        $(".loader").fadeOut();
-        $("#preloder").delay(200).fadeOut("slow");
-    });
-
-    /*------------------
-        Background Set
-    --------------------*/
-    $('.set-bg').each(function () {
-        var bg = $(this).data('setbg');
-        $(this).css('background-image', 'url(' + bg + ')');
-    });
-
-    // Search model
-    $('.search-switch').on('click', function () {
-        $('.search-model').fadeIn(400);
-    });
-
-    $('.search-close-switch').on('click', function () {
-        $('.search-model').fadeOut(400, function () {
-            $('#search-input').val('');
-        });
-    });
-
-    // Isotppe Filter
-    $(".filter-controls li").on('click', function() {
-        var filterData = $(this).attr("data-filter");
-
-        $(".portfolio-filter, .gallery-filter").isotope({
-            filter: filterData,
-        });
-
-        $(".filter-controls li").removeClass('active');
-        $(this).addClass('active');
-    });
-
-    $(".portfolio-filter, .gallery-filter").isotope({
-        itemSelector: '.pf-item, .gf-item',
-        percentPosition: true,
-        masonry: {
-        // use element for option
-        columnWidth: '.pf-item, .gf-item',
-        horizontalOrder: true,
-      }
-    });
-
-    //Masonary
-    $('.portfolio-details-pic').masonry({
-        itemSelector: '.pdp-item',
-        columnWidth: '.pdp-item'
-    });
-
-    /*------------------
-		Navigation
-	--------------------*/
-    $(".mobile-menu").slicknav({
-        prependTo: '#mobile-menu-wrap',
-        allowParentLinks: true
-    });
-
-    /*------------------
-        Carousel Slider
-    --------------------*/
-    var hero_s = $(".hs-slider");
-    hero_s.owlCarousel({
-        loop: true,
-        margin: 0,
-        nav: true,
-        items: 1,
-        dots: false,
-        animateOut: 'fadeOut',
-        animateIn: 'fadeIn',
-        navText: ['<span class="arrow_carrot-left"></span>', '<span class="arrow_carrot-right"></span>'],
-        smartSpeed: 1200,
-        autoHeight: false,
-        autoplay: true
-    });
-
-    /*------------------
-        Team Slider
-    --------------------*/
-    $(".categories-slider").owlCarousel({
-        loop: true,
-        margin: 20,
-        items: 3,
-        dots: false,
-        nav: true,
-        navText: ['<span class="arrow_carrot-left"></span>', '<span class="arrow_carrot-right"></span>'],
-        stagePadding: 120,
-        smartSpeed: 1200,
-        autoHeight: false,
-        autoplay: true,
-        responsive: {
-            0: {
-                items: 1,
-                stagePadding: 0
-            },
-            768: {
-                items: 2,
-                stagePadding: 0
-            },
-            992: {
-                items: 2
-            },
-            1200: {
-                items: 3
+    "use strict";
+    
+    // Dropdown on mouse hover
+    $(document).ready(function () {
+        function toggleNavbarMethod() {
+            if ($(window).width() > 768) {
+                $('.navbar .dropdown').on('mouseover', function () {
+                    $('.dropdown-toggle', this).trigger('click');
+                }).on('mouseout', function () {
+                    $('.dropdown-toggle', this).trigger('click').blur();
+                });
+            } else {
+                $('.navbar .dropdown').off('mouseover').off('mouseout');
             }
         }
+        toggleNavbarMethod();
+        $(window).resize(toggleNavbarMethod);
     });
-
-    /*------------------
-        Image Popup
-    --------------------*/
-    $('.image-popup').magnificPopup({
-        type: 'image'
+    
+    
+    // Back to top button
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 100) {
+            $('.back-to-top').fadeIn('slow');
+        } else {
+            $('.back-to-top').fadeOut('slow');
+        }
     });
-
-    /*------------------
-        Video Popup
-    --------------------*/
-    $('.video-popup').magnificPopup({
-        type: 'iframe'
+    $('.back-to-top').click(function () {
+        $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+        return false;
     });
-
+    
+    
+    // Header slider
+    $('.header-slider').slick({
+        autoplay: true,
+        dots: true,
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1
+    });
+    
+    
+    // Product Slider 4 Column
+    $('.product-slider-4').slick({
+        autoplay: true,
+        infinite: true,
+        dots: false,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        responsive: [
+            {
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 4,
+                }
+            },
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 3,
+                }
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 2,
+                }
+            },
+            {
+                breakpoint: 576,
+                settings: {
+                    slidesToShow: 1,
+                }
+            },
+        ]
+    });
+    
+    
+    // Product Slider 3 Column
+    $('.product-slider-3').slick({
+        autoplay: true,
+        infinite: true,
+        dots: false,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        responsive: [
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 3,
+                }
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 2,
+                }
+            },
+            {
+                breakpoint: 576,
+                settings: {
+                    slidesToShow: 1,
+                }
+            },
+        ]
+    });
+    
+    
+    // Product Detail Slider
+    $('.product-slider-single').slick({
+        infinite: true,
+        autoplay: true,
+        dots: false,
+        fade: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        asNavFor: '.product-slider-single-nav'
+    });
+    $('.product-slider-single-nav').slick({
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        dots: false,
+        centerMode: true,
+        focusOnSelect: true,
+        asNavFor: '.product-slider-single'
+    });
+    
+    
+    // Brand Slider
+    $('.brand-slider').slick({
+        speed: 5000,
+        autoplay: true,
+        autoplaySpeed: 0,
+        cssEase: 'linear',
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        infinite: true,
+        swipeToSlide: true,
+        centerMode: true,
+        focusOnSelect: false,
+        arrows: false,
+        dots: false,
+        responsive: [
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 4,
+                }
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 3,
+                }
+            },
+            {
+                breakpoint: 576,
+                settings: {
+                    slidesToShow: 2,
+                }
+            },
+            {
+                breakpoint: 300,
+                settings: {
+                    slidesToShow: 1,
+                }
+            }
+        ]
+    });
+    
+    
+    // Review slider
+    $('.review-slider').slick({
+        autoplay: true,
+        dots: false,
+        infinite: true,
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        responsive: [
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1,
+                }
+            }
+        ]
+    });
+    
+    
+    // Widget slider
+    $('.sidebar-slider').slick({
+        autoplay: true,
+        dots: false,
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1
+    });
+    
+    
+    // Quantity
+    $('.qty button').on('click', function () {
+        var $button = $(this);
+        var oldValue = $button.parent().find('input').val();
+        if ($button.hasClass('btn-plus')) {
+            var newVal = parseFloat(oldValue) + 1;
+        } else {
+            if (oldValue > 0) {
+                var newVal = parseFloat(oldValue) - 1;
+            } else {
+                newVal = 0;
+            }
+        }
+        $button.parent().find('input').val(newVal);
+    });
+    
+    
+    // Shipping address show hide
+    $('.checkout #shipto').change(function () {
+        if($(this).is(':checked')) {
+            $('.checkout .shipping-address').slideDown();
+        } else {
+            $('.checkout .shipping-address').slideUp();
+        }
+    });
+    
+    
+    // Payment methods show hide
+    $('.checkout .payment-method .custom-control-input').change(function () {
+        if ($(this).prop('checked')) {
+            var checkbox_id = $(this).attr('id');
+            $('.checkout .payment-method .payment-content').slideUp();
+            $('#' + checkbox_id + '-show').slideDown();
+        }
+    });
 })(jQuery);
+

@@ -53,7 +53,7 @@ class Product(models.Model):
 
     def get_edit_url(self):
         view_name = "seller:update_product"
-        return reverse(view_name, kwargs={"pk": self.pk})
+        return reverse(view_name, kwargs={"slug": self.slug})
 
     def get_absolute_url(self):
         return f"/product/{self.slug}/"

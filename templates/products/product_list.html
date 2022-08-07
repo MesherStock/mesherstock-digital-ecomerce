@@ -1,13 +1,28 @@
 {% extends "base.html" %}
 
+{% load watermark %}
+
 {% block title %}Products |{{ block.super }}{% endblock %}
 {% block content %}
 
-<div class="row">
-   
-        {% include "products/snippets/product_list_snippet.html" with product_list=object_list %}
 
+
+<div class="category">
+        <div class="container-fluid">
+                <div class="row">
+                        {% for instance in object_list %}
+                        <div class="col-md-3">
+                                <div class="category-item ch-400">
+                                        <img src="{{ instance.image.url|watermark:'MeShutter,position=C,opacity=85' }}" />
+                                        <a class="category-name" href="{{ instance.get_absolute_url }}">
+                                        </a>
+                                </div>
+                        </div>
+                        {% endfor %}
+                </div>
+        </div>
 </div>
+
 
 
 {% endblock %}

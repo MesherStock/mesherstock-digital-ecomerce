@@ -21,7 +21,7 @@ from django.utils.http import (
     urlsafe_base64_decode
 )
 from django.contrib.auth.tokens import default_token_generator, PasswordResetTokenGenerator
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage, send_mail
 
 
 
@@ -52,6 +52,14 @@ def register(request):
             to_email = email
             msg = EmailMessage(mail_subject, message, to=[to_email])
             msg.send()
+
+            # send_mail(
+            #     mail_subject,
+            #     message,
+            #     'amecomglobalenterp@gmail.com',
+            #     [to_email],
+            #     fail_silently=False,
+            # )
             
             # messages.success(request, 'Thank you for registering with us. We have sent you a verification email to your email address [rathan.kumar@gmail.com]. Please verify it.')
             return redirect('/accounts/login/?command=verification&email='+email)

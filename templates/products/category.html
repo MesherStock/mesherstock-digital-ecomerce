@@ -5,46 +5,22 @@
 
 
 
-<!-- Breadcrumb Begin -->
-<div class="breadcrumb-option spad">
-    <div class="container">
+<div class="category">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12 ">
-                <div class="bo-links">
-                    
-                    <a href="/">
-                        <img src="{% static 'img/logo.png' %}" alt="">
-                    </a>
-                
-                    <!-- <a href="."><i class="fa fa-home"></i> Home</a> -->
-                    <span style="float: right;">{{ category.title }}</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Breadcrumb End -->
-
-
-
-<div class="container mb-4">
-            <div class="row" style="display: flex;">
-
             {% for item in category.products.all %}
-            <div class="col-md-3 p-0" style="flex:33.33%; text-align: center;">
-
-
-                <a href="{{ item.get_absolute_url }}">
-                    <img class="img-responsive" src="{{ item.image.url|watermark:'MeShutter,position=C,opacity=85' }}" alt=""
-                        style="max-width: 480;max-height:auto;">
-                </a>
-
-
-
+            <div class="col-md-3">
+                <div class="category-item ch-400">
+                    <img src="{{ item.image.url|watermark:'MeShutter,position=C,opacity=85' }}" />
+                    <a class="category-name" href="{{ item.get_absolute_url }}">
+                        <p>{{ item.category }}</p>
+                    </a>
+                </div>
             </div>
             {% endfor %}
 
         </div>
+    </div>
 </div>
 
 {% endblock %}
