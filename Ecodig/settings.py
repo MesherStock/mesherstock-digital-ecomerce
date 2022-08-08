@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     'orders',
     'sellers',
     'tags',
-    # 'watermarker',
+    'watermarker',
     # "anymail",
 ]
 
