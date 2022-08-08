@@ -28,15 +28,25 @@ def category_view(request):
 
 def category_list(request, pk):
     try:
-        category = Category.objects.get(id=pk)
-        context = {
-            'category': category,
-        }
-        return render(request, 'products/category.html', context)
+        category = get_object_or_404(Category, id=pk)
+    
+    except Category.DoesNotExist:
+        raise Http404
+
+    context = {
+        'category': category,
+    }
+    return render(request, 'products/category.html', context)
+    # try:
+    #     category = Category.objects.get(id=pk)
+    #     context = {
+    #         'category': category,
+    #     }
+    #     return render(request, 'products/category.html', context)
 
     
-    except:
-        raise Http404
+    # except:
+    #     raise Http404
 
 class VendorListView(ListView):
     model = Product
