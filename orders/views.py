@@ -19,7 +19,6 @@ from django.conf import settings
 from decimal import Decimal
 from django.views.generic import FormView
 from django.urls import reverse
-from paypal.standard.forms import PayPalPaymentsForm
 from django.views.decorators.csrf import csrf_exempt
 
 
