@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     'orders',
     'sellers',
     'tags',
-    'watermarker',
+    # 'watermarker',
     # "anymail",
 ]
 
@@ -127,13 +127,13 @@ USE_TZ = True
 
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+# STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-# STATIC_ROOT = Path.joinpath(BASE_DIR, '/static/')
+STATIC_ROOT = Path.joinpath(BASE_DIR, 'staticfiles')
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR/ "mediaProt"/ "media"
 
