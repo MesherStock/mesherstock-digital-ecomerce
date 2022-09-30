@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
-{% block title %}{{title}} |{{ block.super }}{% endblock %}
+{% block title %}| {{title}} {{ block.super }}{% endblock %}
 {% block content %}
 
 {% if apply_form %}
@@ -48,7 +48,7 @@
                     <div class="col-md-4">
                         <div class="product-item">
                             <div class="product-image">
-                                <a href="product-detail.html">
+                                <a href="{{ product.get_absolute_url }}">
                                     <img src="{{ product.image.url }}" alt="Product Image">
                                 </a>
 

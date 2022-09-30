@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}|Cart {% endblock %}
+
+{% block content %}
+
+<!-- Cart Start -->
+{% if not cart_items %}
+<div class="text-center m-4">
+    <h3>Your Shopping Cart is Empty</h3>
+    <a href="{% url 'product:category_view' %}">
+        <button class="btn btn-info rounded-pill" >Continue Shopping</button>
+    </a>
+</div>
+{% else %}
+<div class="cart-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="cart-page-inner">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <!-- <thead class="thead-dark">
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th>Remove</th>
+                                </tr>
+                            </thead> -->
+                            <tbody class="align-middle">
+                                {% for item in cart_items %}
+
+                                <tr>
+                                    <td>
+                                        <div class="img">
+                                            <a href="{{ item.product.get_absolute_url }}"><img src="{{ item.product.image.url }}" alt="Image"></a>
+                                            <p>{{ item.product }}</p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        Personal use
+                                    </td>
+                                
+                                    <td>${{ item.sub_total }}</td>
+                                    <td>
+                                        <a href="{% url 'cart:delete_cart_item' item.product.id item.id %}">
+                                            <button><i class="fa fa-trash"></i></button>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="cart-page-inner">
+                    <div class="row">
+                        <!-- <div class="col-md-12">
+                            <div class="coupon">
+                                <input type="text" placeholder="Coupon Code">
+                                <button>Apply Code</button>
+                            </div>
+                        </div> -->
+                        <div class="col-md-12">
+                            <div class="cart-summary">
+                                <div class="cart-content">
+                                    <h1>Cart Summary</h1>
+                                    <p>Sub Total<span>${{ total }}</span></p>
+                                    <p>Tax<span>${{ tax }}</span></p>
+                                    <h2>Grand Total<span>${{ grand_total }}</span></h2>
+                                </div>
+                                <div class="cart-btn">
+                                    <a href="{% url 'product:category_view' %}">
+                                        <button class="">Continue Shopping</button>
+                                    </a>
+                                 
+                                        <button class="">
+                                            <a href="{% url 'cart:checkout' %}" class="text-white">Checkout</a>
+                                        </button>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+<!-- Cart End -->
+
+{% endblock %}

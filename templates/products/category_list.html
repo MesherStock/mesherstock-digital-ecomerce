@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Categories |{{ block.super }}{% endblock %}
+{% block title %}| All Category {{ block.super }}{% endblock %}
 {% block content %}
 
 
@@ -12,7 +12,7 @@
             <div class="col-md-3">
                 <div class="category-item ch-400">
                     <img src="{{ item.image.url }}" />
-                    <a class="category-name" href="{{ item.get_url }}">
+                    <a class="category-name" href="{% url 'products:category_list' item.slug %}">
                         <p>{{ item.category }}</p>
                     </a>
                 </div>

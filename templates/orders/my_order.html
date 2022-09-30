@@ -55,7 +55,7 @@
                                         <td><img src="{{ object.product.image.url }}" alt="" width="100" height="100px">
                                         </td>
                                         <td>{{ object.product.title }}</td>
-                                        <td>${{ object.total}}</td>
+                                        <td>${{ object.product.price}}</td>
                                         <td>
                                             {% if object.is_downloadable %}
                                             <a href="{{object.get_download_url}}">Download</a>

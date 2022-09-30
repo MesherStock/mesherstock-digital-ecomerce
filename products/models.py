@@ -10,6 +10,13 @@ from django.utils.text import slugify
 from django.db.models.signals import pre_save
 from sellers.models import Seller
 
+from fileinput import filename
+from PIL import ImageDraw, ImageFont, Image
+from tkinter import SEL_FIRST, filedialog, Tk
+import io
+
+opacity_level = 170
+
 # Create your models here.
 # def user_directory_path(instance, filename):
 #     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
@@ -18,14 +25,22 @@ def download_media_location(instance, filename):
 	return "%s/%s" %(instance.slug, filename)
 
 
+class Banner(models.Model):
+    img = models.ImageField(blank=True, null=True)
+    alt_text = models.CharField(max_length = 300)
+
+    def __str__(self):
+        return self.alt_text
+
+
 
 class Product(models.Model):
     seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     slug = models.SlugField(blank=True, unique=True)
+    category = models.ForeignKey("Category", on_delete=models.CASCADE)
     image = models.ImageField(upload_to=download_media_location, blank=True, null=True)
     media = models.FileField(upload_to=download_media_location, storage=ProtectedStorage, null=True, blank=True)
-    # category = models.ManyToManyField("Category", related_name="product_category")
     video_link = models.TextField(blank=True)
     content = models.TextField(null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=9.99)
@@ -36,16 +51,36 @@ class Product(models.Model):
     is_digital = models.BooleanField(default=True)
     image_size = models.CharField(max_length=20, null=True)
     location = models.CharField(max_length=150, null=True)
+    recent_product = models.BooleanField(default=False)
 
 
 
     def __str__(self):
         return self.title
-    
 
-    # @property
-    # def is_digital(self):
-    #     return self.media != None
+
+    def save(self, *args, **kwargs):
+        super(Product, self).save(*args, **kwargs)
+        photo = Image.open(self.image.path)
+        print("Image not saving")
+        print(photo)
+        if photo.mode in ("RGBA", "P"):
+            photo = photo.convert("RGB")
+
+        width, height = photo.size
+        draw = ImageDraw.Draw(photo)
+        myword = "MESHER"
+        font_size = int(width / 15)
+        try:
+            font = ImageFont.truetype('I am Hueca.ttf', font_size)
+        except:
+            font = ImageFont.load_default(50)
+
+        x, y = int(width/2), int(height/2)
+        draw.text((x, y),myword, font=font, fill='#FFFF', stroke_width=5, stroke_fill="#222", anchor='ms')
+        photo.save(self.image.path)
+
+
 
     def get_edit_url(self):
         view_name = "seller:update"
@@ -117,13 +152,15 @@ def create_slug(instance, new_slug=None):
 def product_pre_save_receiver(sender, instance, *args, **kwargs):
 	if not instance.slug:
 		instance.slug = create_slug(instance)
+    
+    
 		
 pre_save.connect(product_pre_save_receiver, sender=Product)
 
 
 
 class Category(models.Model):
-    products = models.ManyToManyField(Product)
+    # products = models.ManyToManyField(Product)
     title = models.CharField(max_length=120)
     description = models.CharField(max_length=255)
     slug = models.SlugField()
@@ -154,6 +191,7 @@ class CategoryImage(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="category")
     image = models.ImageField(upload_to='products/image')
     title = models.CharField(max_length=120, null=True, blank=True)
+    slug = models.SlugField()
     feautured_image = models.BooleanField(default=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
@@ -165,7 +203,7 @@ class CategoryImage(models.Model):
         return reverse("product:category_view")
 
     def get_url(self):
-        return reverse("product:category_list", args={self.pk})
+        return reverse("product:category_list", args={self.slug})
 
 
 class FeaturedManager(models.Manager):
@@ -182,9 +220,9 @@ class FeaturedManager(models.Manager):
 
 
 
-class Feautured(models.Model):
+class Featured(models.Model):
     title = models.CharField(max_length=150)
-    products = models.ManyToManyField(Product, limit_choices_to={'active':True}, blank=True)
+    products = models.ManyToManyField(Product,related_name='featured_product', limit_choices_to={'featured':True}, blank=True)
     date_start = models.DateField(auto_now=False, auto_now_add=False)
     date_end = models.DateField(auto_now=False, auto_now_add=False)
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)

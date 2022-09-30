@@ -13,8 +13,8 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = [
-            # 'category',
             'title',
+            'category',
             'content',
             'image',
             'media',
@@ -38,6 +38,12 @@ class ProductForm(forms.ModelForm):
                      "class": "form-control"
                 }
             ),
+            "category":forms.Select(
+                attrs={
+                    "placeholder":"Category",
+                    "class": 'form-control'
+                }
+            )
         }
     
     def clean_content(self):

@@ -1,6 +1,8 @@
 
 from django.contrib import messages
 from django.forms.widgets import EmailInput
+
+from carts.models import Cart, CartItem
 from .models import Account
 from django.shortcuts import get_object_or_404, redirect, render
 from .forms import RegistrationForm, UserForm
@@ -8,6 +10,7 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
+from carts.views import  _cart_id
 
 import requests
 from orders.models import Order
@@ -80,6 +83,17 @@ def login(request):
         user = auth.authenticate(email=email, password=password)
 
         if user is not None:
+            try:
+                cart = Cart.objects.get(cart_id=_cart_id(request))
+                is_cart_item = CartItem.objects.filter(cart=cart).exists()
+                if is_cart_item:
+                    cart_items = CartItem.objects.filter(cart=cart)
+                    for item in cart_items:
+                        item.user = user
+                        item.save()
+            except Cart.DoesNotExist:
+                cart = Cart.objects.create(cart_id=_cart_id(request))
+                cart.save()
             auth.login(request, user)
             messages.success(request, 'You are now logged in.')
             url = request.META.get('HTTP_REFERER')
@@ -91,7 +105,6 @@ def login(request):
                     nextPage = params['next']
                     return redirect(nextPage)                
             except:
-                print("No User")
                 return redirect('product:category_view')
         else:
             messages.error(request, 'Invalid login credentials')

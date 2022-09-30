@@ -1,19 +1,35 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load watermark %}
+{% block title %}| {{ category }} {{ block.super }} {% endblock %}
 {% block content %}
 
 
 
 <div class="category">
     <div class="container-fluid">
+
         <div class="row">
-            {% for item in category.products.all %}
+
+
+
+            {% if item in categories %}
             <div class="col-md-3">
                 <div class="category-item ch-400">
-                    <img src="{{ item.image.url|watermark:'MeShutter,position=C,opacity=85' }}" />
+                    <img src="{{ item.image.url }}" />
                     <a class="category-name" href="{{ item.get_absolute_url }}">
-                        <p>{{ item.category }}</p>
+                        <p>{{ item }}</p>
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+
+
+            {% for item in products %}
+           <div class="col-md-3">
+                <div class="category-item ch-400">
+                   
+                    <a class="" href="{{ item.get_absolute_url }}">
+                        <img src="{{ item.image.url }}" />
                     </a>
                 </div>
             </div>

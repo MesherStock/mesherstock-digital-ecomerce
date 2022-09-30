@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
-{% load watermark %}
-{% block title %}{{ q }} |{{ block.super }}{% endblock %}
+{% block title %}| Curated photo on mesher {{ block.super }}{% endblock %}
 {% block content %}
 
 <!-- Product List Start -->
@@ -21,55 +20,75 @@
 <div class="product-view">
     <div class="container-fluid">
         <div class="row">
-             {% if results %}
-                <div class="row">
-                    {% for item in results %}
-                   
-                    <div class="col-md-3">
-                        <div class="product-item">
-                            <div class="product-image">
-                                <a href="{{ item.get_absolute_url }}">
-                                    <img src="{{ item.image.url |watermark:'MeShutter,position=C,opacity=85' }}" alt="Product Image" style="max-width: 480;max-height: auto;">
-                                </a>
-                                <!-- <div class="product-action">
+            {% if results %}
+            <div class="row">
+                {% for item in results %}
+
+                <div class="col-md-3">
+                    <div class="product-item">
+                        <div class="product-image">
+                            <a href="{{ item.get_absolute_url }}">
+                                <img src="{{ item.image.url }}" alt="Product Image"
+                                    style="max-width: 480;max-height: auto;">
+                            </a>
+                            <!-- <div class="product-action">
                                     <a href="#"><i class="fa fa-cart-plus"></i></a>
                                     <a href="#"><i class="fa fa-heart"></i></a>
                                     <a href="#"><i class="fa fa-search"></i></a>
                                 </div> -->
-                            </div>
-                            <!-- <div class="product-price">
+                        </div>
+                        <!-- <div class="product-price">
                                 <h3><span>$</span>99</h3>
                                 <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
                             </div> -->
-                        </div>
                     </div>
-                    
-                    {% endfor %}
+                </div>
+
+                {% endfor %}
 
 
-                    <!-- Pagination Start -->
-                    <div class="col-md-12">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1">Previous</a>
-                                </li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <!-- Pagination Start -->
+                <!-- Pagination Start -->
+                <div class="col-md-12">
+
+                    <nav aria-label="Page navigation example">
+                        {% if results.has_other_pages %}
+                        <ul class="pagination justify-content-center">
+                            {% if results.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ results.previous_page_number }}"
+                                    tabindex="-1">Previous</a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">Previous</a>
+                            </li>
+                            {% endif %}
+
+                            {% for i in results.paginator.page_range %}
+                            {% if results.number == i %}
+                            <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+                            {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                            {% endfor %}
+
+                            {% if results.has_next %}
+                            <li class="page-item"><a class="page-link" href="?page={{ results.next_page_number }}">Next</a></li>
+                            {% else %}
+                             <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                            {% endif %}
+                        </ul>
+                        {% endif %}
+                    </nav>
+
                 </div>
-                {% else %}
-                <div class="" style="text-align: center;">
-                    <p class="h3">Nothing match your search result.</p>
-                </div>
-                {% endif %}
+                <!-- Pagination Start -->
+            </div>
+            {% else %}
+            <div class="" style="text-align: center;">
+                <p class="h3">Nothing match your search result.</p>
+            </div>
+            {% endif %}
 
 
         </div>

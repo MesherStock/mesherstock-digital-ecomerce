@@ -10,7 +10,7 @@ from .mixins import SellerAccountMixin
 from .forms import NewSellerForm
 from .models import Seller
 from products.models import Product
-from orders.models import Order
+from orders.models import Order, OrderProduct
 from django.shortcuts import get_object_or_404
 from django.views.generic import RedirectView
 # Create your views here.

@@ -4,7 +4,11 @@ from django.http import Http404, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render, get_object_or_404
 from django.db.models import Q
-from .models import Category, CategoryImage, Product
+from carts.views import _cart_id
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+
+from carts.models import CartItem
+from .models import Category, CategoryImage, Product, Featured, Banner
 from .forms import ProductForm
 from emails.models import InventoryWaitList
 from sellers.models import Seller
@@ -19,34 +23,29 @@ from Ecodig.mixins import MultiSlugMixin
 
 def category_view(request):
     cat = Category.objects.all()
-    category = CategoryImage.objects.filter(category_id__in=cat)
+
+    category = CategoryImage.objects.filter(category__in=cat)
     context = {
         "category" : category,
         'cat':cat,
     }
     return render(request, 'products/category_list.html', context )
 
-def category_list(request, pk):
-    try:
-        category = get_object_or_404(Category, id=pk)
-    
-    except Category.DoesNotExist:
-        raise Http404
+def category_list(request, slug):
+    categories = Category.objects.all()
+    if slug:
+        category = get_object_or_404(Category, slug=slug)
+        print(category)
+        products = Product.objects.filter(category=category)
+        print(products)
 
     context = {
         'category': category,
+        'products': products,
+        'categories': categories
     }
     return render(request, 'products/category.html', context)
-    # try:
-    #     category = Category.objects.get(id=pk)
-    #     context = {
-    #         'category': category,
-    #     }
-    #     return render(request, 'products/category.html', context)
 
-    
-    # except:
-    #     raise Http404
 
 class VendorListView(ListView):
     model = Product
@@ -78,11 +77,18 @@ class VendorListView(ListView):
 
 
 def home_view(request):
+    banner = Banner.objects.all()
     cat = Category.objects.all()
+    recent_product = Product.objects.filter(recent_product=True).order_by('-recent_product')
     category = CategoryImage.objects.filter(category_id__in=cat)[:4]
+    featured = Product.objects.filter(featured=True).order_by('-featured')[:7]
+ 
     context = {
         "category" : category,
         'cat':cat,
+        'featured': featured,
+        'banner': banner,
+        'recent_product': recent_product,
     }
     return render(request, "index.html", context)
 
@@ -116,7 +122,7 @@ class ProductCreateView(SellerAccountMixin,CreateView):
 
 
 def featured_view(request, *args, **kwargs):
-    qs = Product.objects.filter(featured=True)
+    qs = Product.objects.filter(featured=True).order_by('-id')
     product = None
     form = None
     can_order = False
@@ -164,12 +170,15 @@ def search_view(request, *args, **kwargs):
         q = False
     product_queryset = Product.objects.filter(
         Q(title__icontains=q)|Q(content__icontains=q)|Q(category__title__icontains=q)
-    )
+    ).order_by('id')
     results = list(chain(product_queryset))
+    paginator = Paginator(results, 4)
+    page = request.GET.get('page')
+    paged_products = paginator.get_page(page)
 
     context = {
-        "product_queryset": product_queryset,
-        "results":results,
+        "product_queryset": paged_products,
+        "results":paged_products,
         "q": q
     }
     return render(request, 'products/search.html', context)
@@ -179,18 +188,18 @@ def product_detail_view(request,slug):
     qs = Product.objects.filter(slug=slug)
    
     product = None
+    
     can_order = False
     form = None
     if qs.exists():
         product = qs.first()
-    categories = product.category_set.all()
-    related = []
-    if len(categories) >=1:
-        for category in categories:
-            product_category = category.products.all()
-            for item in product_category:
-                if not item == product:
-                    related.append(item)
+    
+    if request.user.is_authenticated:
+        in_cart = CartItem.objects.filter(user=request.user, product=product).exists()
+    else:
+        in_cart = CartItem.objects.filter(cart__cart_id=_cart_id(request), product=product).exists()
+    related = Product.objects.filter(category=product.category).exclude(slug=product.slug)
+   
 
 
     if product != None:
@@ -212,8 +221,9 @@ def product_detail_view(request,slug):
         'object': product,
         "can_order": can_order,
         "form" : form,
-        "categories": categories,
+        # "categories": categories,
         'related': related,
+        'in_cart' : in_cart,
     }
     return render(request, "products/detail.html", context)
 

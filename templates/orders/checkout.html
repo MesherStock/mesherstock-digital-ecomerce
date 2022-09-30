@@ -19,45 +19,65 @@
 {% block content %}
 
 
-<!-- Breadcrumb Begin -->
-<div class="breadcrumb-option spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 ">
-                <div class="bo-links">
-                    
-                    <a href="/">
-                        <img src="{% static 'img/logo.png' %}" alt="">
-                    </a>
-                
-                    <!-- <a href="."><i class="fa fa-home"></i> Home</a> -->
-                    <span style="float: right;">Secured Checkout</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Breadcrumb End -->
+
 <section class="mb-4">
     <div class="container">
+
         <div class="row">
+
             <div class="col-lg-6">
-                <div>
-                    <form method="post" action=".">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <input id="form-button" class="btn btn-success btn-block" type="submit" value="Continue">
-                    </form>
-                </div>
+                <form method="post" action="{% url 'order:place_order' %}">
+                    {% csrf_token %}
 
-                <br>
-
-
+                    <div class="shipping-address">
+                        <h2>Shipping Address</h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>First Name</label>
+                                <input class="form-control" type="text" name="first_name" placeholder="First Name">
+                            </div>
+                            <div class="col-md-6">
+                                <label>Last Name"</label>
+                                <input class="form-control" name="last_name" type="text" placeholder="Last Name">
+                            </div>
+                            <div class="col-md-6">
+                                <label>E-mail</label>
+                                <input class="form-control" type="text" name="email" placeholder="E-mail">
+                            </div>
+                            <div class="col-md-6">
+                                <label>Mobile No</label>
+                                <input class="form-control" type="text" name="phone" placeholder="Mobile No">
+                            </div>
+                            <div class="col-md-12">
+                                <label>Address</label>
+                                <input class="form-control" type="text" name="address_line_1" placeholder="Address">
+                            </div>
+                            <div class="col-md-6">
+                                <label>Country</label>
+                                <input type="text" class="form-control" name="country" placeholder="Country">
+                            </div>
+                            <div class="col-md-6">
+                                <label>City</label>
+                                <input class="form-control" type="text" name="city" placeholder="City">
+                            </div>
+                            <div class="col-md-6">
+                                <label>State</label>
+                                <input class="form-control" type="text" name="state" placeholder="State">
+                            </div>
+                            <div class="col-md-6">
+                                <label>ZIP Code</label>
+                                <input class="form-control" type="text" name="zipcode" placeholder="ZIP Code">
+                            </div>
+                        </div>
+                    </div>
+                   
             </div>
 
+
+            <br>
             <div class="col-lg-6">
                 <div class="box-element">
-                    
+
                     <h3>Order Summary</h3>
                     <hr>
                     <table class="table table-borderless border-bottom">
@@ -66,21 +86,30 @@
                             <td>{{object.product}}</td>
                             <td>${{ object.subtotal }}</td>
                         </tr>
-                        <tr><td></td>
+                        <tr>
+                            <td></td>
                             <td>Tax</td>
-                            
+
                             <td>${{ object.tax }}</td>
                         </tr>
                         <tr class="font-weight-bold">
                             <td></td>
                             <td class="">Total</td>
-                            
+
                             <td>${{ object.total }}</td>
                         </tr>
                     </table>
                 </div>
+                <button>
+                    <a href="{% url 'order:payment' %}">Continue</a>
+                </button>
             </div>
+             
+                </form>
+
         </div>
+
+    </div>
 
     </div>
 

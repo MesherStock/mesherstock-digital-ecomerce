@@ -2,11 +2,11 @@ from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.core.files.storage import FileSystemStorage
 
-PROTECTED_MEDIA = getattr(settings, "PROTECTED_MEDIA", None)
+DEFAULT_FILE_STORAGE = getattr(settings, "DEFAULT_FILE_STORAGE", None)
 
-if PROTECTED_MEDIA == None:
-    raise ImproperlyConfigured("PROTECTED_MEDIA is not set in seetings.py")
+if DEFAULT_FILE_STORAGE == None:
+    raise ImproperlyConfigured("DEFAULT_FILE_STORAGE is not set in seetings.py")
 
 
 class ProtectedStorage(FileSystemStorage):
-    location = PROTECTED_MEDIA
+    location = DEFAULT_FILE_STORAGE

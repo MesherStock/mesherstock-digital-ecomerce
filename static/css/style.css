@@ -1386,7 +1386,6 @@ h2 {
 
 .sidebar-widget.brands ul li span {
     display: inline-block;
-    float: right;
     color: #666666;
     font-size: 14px;
     font-weight: 400;
@@ -1716,7 +1715,31 @@ h2 {
     border: none;
 }
 
+dl[class=row] {
+  margin-bottom: 0;
+}
+[class*=dlist-] {
+  margin-bottom: 5px;
+}
+[class*=dlist-] dd {
+  margin-bottom: 0;
+}
 
+.dlist-inline dt, .dlist-inline dd {
+  display: inline-block;
+}
+
+.dlist-align {
+  display: flex;
+}
+.dlist-align dt {
+  width: 150px;
+  word-wrap: break-word;
+  font-weight: normal;
+}
+.dlist-align dd {
+  flex-grow: 1;
+}
 /**********************************/
 /********** Checkout CSS **********/
 /**********************************/
@@ -2327,6 +2350,8 @@ h2 {
 .footer .payment-security {
     text-align: right;
 }
+
+
 
 @media (max-width: 768.98px) {
     .footer .payment-method {

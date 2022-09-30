@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load watermark %}
 
 
-{% block title %} {{ object.title }} |{{ block.super }} {% endblock %}
+
+
+{% block title %}| {{ object.title }} {{ block.super }} {% endblock %}
 
 {% block content %}
 
@@ -18,7 +19,7 @@
                         <div class="col-md-7">
                             <div class="product-slider-single normal-slider">
                                 {% if object.image %}
-                                <img src="{{ object.image.url|watermark:'MeShutter,position=C,opacity=85' }}"
+                                <img src="{{ object.image.url }}"
                                     alt="Product Image">
                                 {% endif %}
                             </div>
@@ -43,15 +44,18 @@
 
 
                                 <div class="action">
-                                    <a class="btn" href="#"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
-                                    <a class="btn" href="/checkout/"><i class="fa fa-shopping-bag"></i>Buy Now</a>
+                                    {% if in_cart %}
+                                    <a class="btn" href="{% url 'cart:cart' %}"><i class="fa fa-check"></i>Check out now</a>
+                                    {% else %}
+                                    <a class="btn" href="{% url 'cart:add_to_cart' object.id %}"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="row product-detail-bottom">
+<!--                 <div class="row product-detail-bottom">
                     <div class="col-lg-12">
                         <ul class="nav nav-pills nav-justified">
                             <li class="nav-item">
@@ -132,7 +136,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 {% if related %}
                 <div class="product">
                     <div class="section-header">
@@ -145,7 +149,7 @@
                             <div class="product-item">
                                 <div class="product-image">
                                     <a href="{{ item.get_absolute_url }}">
-                                        <img src="{{item.image.url|watermark:'MeShutter,position=C,opacity=85'}}"
+                                        <img src="{{item.image.url}}"
                                             alt="Product Image">
                                     </a>
                                    

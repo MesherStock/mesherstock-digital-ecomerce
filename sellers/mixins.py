@@ -1,7 +1,12 @@
+from urllib import request
 from .models import Seller
 from django.contrib.auth.mixins import LoginRequiredMixin
-from orders.models import Order
+from orders.models import Order, OrderProduct
 from products.models import Product
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage, send_mail
+
 
 class SellerAccountMixin(LoginRequiredMixin, object):
     account = None
@@ -24,5 +29,5 @@ class SellerAccountMixin(LoginRequiredMixin, object):
     
     def get_transactions(self):
         products = self.get_product()
-        transactions = Order.objects.filter(product__in=products)
+        transactions = OrderProduct.objects.filter(product__in=products)
         return transactions
